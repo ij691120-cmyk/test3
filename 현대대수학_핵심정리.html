@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>현대대수학 핵심 정리</title>
+  <style>
+    :root { --ink:#172033; --muted:#5b6475; --accent:#3157a4; --soft:#eef3fb; --line:#dce3ee; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,"Malgun Gothic",sans-serif; color:var(--ink); line-height:1.75; background:#f7f9fc; }
+    header { background:linear-gradient(130deg,#172b55,#3157a4); color:white; padding:3rem 1.25rem; }
+    header .wrap, main { max-width:980px; margin:auto; }
+    h1 { margin:0 0 .5rem; font-size:clamp(2rem,5vw,3rem); }
+    header p { margin:0; color:#e3eaff; }
+    nav { position:sticky; top:0; background:#fff; border-bottom:1px solid var(--line); padding:.7rem 1rem; z-index:5; }
+    nav .wrap { max-width:980px; margin:auto; display:flex; flex-wrap:wrap; gap:.5rem 1rem; }
+    nav a { color:var(--accent); text-decoration:none; font-size:.92rem; }
+    main { padding:1.5rem 1rem 4rem; }
+    section { background:white; border:1px solid var(--line); border-radius:14px; padding:1.35rem 1.5rem; margin:1.1rem 0; box-shadow:0 4px 18px #1b31500a; }
+    h2 { margin-top:0; color:#203e78; border-bottom:2px solid var(--soft); padding-bottom:.45rem; }
+    h3 { margin-bottom:.3rem; color:#294b87; }
+    .formula { background:var(--soft); border-left:4px solid var(--accent); padding:.8rem 1rem; margin: .8rem 0; overflow-wrap:anywhere; font-family:Georgia,serif; }
+    .note { color:var(--muted); font-size:.95rem; }
+    table { width:100%; border-collapse:collapse; margin:.8rem 0; }
+    th,td { border:1px solid var(--line); padding:.6rem; text-align:left; vertical-align:top; }
+    th { background:var(--soft); }
+    code { background:#f0f2f6; padding:.12rem .3rem; border-radius:4px; }
+    .quiz { background:#fff9e9; border:1px solid #f1dfaa; padding:1rem; border-radius:10px; }
+    footer { text-align:center; color:var(--muted); padding:2rem 1rem; }
+    @media print { nav { display:none; } body { background:white; } section { break-inside:avoid; box-shadow:none; } }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>현대대수학 핵심 정리</h1>
+    <p>군(Group) · 환(Ring) · 체(Field) · 준동형사상과 몫구조</p>
+    <p class="note">대학 학부 수준의 입문 개념을 정의, 성질, 예시 중심으로 정리한 학습 자료입니다.</p>
+  </div>
+</header>
+<nav><div class="wrap">
+  <a href="#intro">개요</a><a href="#group">군</a><a href="#subgroup">부분군</a>
+  <a href="#cyclic">순환군</a><a href="#hom">준동형</a><a href="#ring">환</a>
+  <a href="#field">체</a><a href="#polynomial">다항식</a><a href="#practice">연습문제</a>
+</div></nav>
+<main>
+<section id="intro">
+  <h2>1. 현대대수학이란?</h2>
+  <p>현대대수학은 집합 위에 정의된 연산과 그 연산이 만족하는 공리적 구조를 연구하는 수학 분야입니다. 구체적인 숫자 계산보다 구조 사이의 공통 성질과 구조를 보존하는 사상을 중요하게 다룹니다.</p>
+  <table>
+    <tr><th>구조</th><th>핵심 연산</th><th>대표 예</th></tr>
+    <tr><td>군(Group)</td><td>하나의 이항연산</td><td>정수의 덧셈군, 대칭군</td></tr>
+    <tr><td>환(Ring)</td><td>덧셈과 곱셈</td><td>정수환 ℤ, 다항식환</td></tr>
+    <tr><td>체(Field)</td><td>덧셈과 곱셈, 0이 아닌 원소의 역원</td><td>유리수 ℚ, 실수 ℝ</td></tr>
+  </table>
+</section>
+
+<section id="group">
+  <h2>2. 군(Group)</h2>
+  <p>집합 G와 이항연산 *가 다음 네 조건을 만족하면 (G, *)를 <strong>군</strong>이라고 합니다.</p>
+  <ol>
+    <li><strong>닫힘성:</strong> a,b∈G이면 a*b∈G.</li>
+    <li><strong>결합법칙:</strong> (a*b)*c = a*(b*c).</li>
+    <li><strong>항등원 존재:</strong> e∈G가 있어 모든 a∈G에 대해 e*a=a*e=a.</li>
+    <li><strong>역원 존재:</strong> 각 a∈G에 대해 a⁻¹∈G가 있어 a*a⁻¹=a⁻¹*a=e.</li>
+  </ol>
+  <div class="formula">군의 공리: 닫힘성 + 결합법칙 + 항등원 + 역원</div>
+  <h3>가환군(아벨군)</h3>
+  <p>추가로 a*b=b*a가 모든 a,b∈G에 대해 성립하면 G를 가환군 또는 아벨군이라고 합니다.</p>
+  <h3>예시</h3>
+  <ul>
+    <li>(ℤ,+): 정수의 덧셈군. 항등원은 0, a의 역원은 −a입니다.</li>
+    <li>(ℤ/nℤ,+): n을 법으로 하는 나머지류의 덧셈군.</li>
+    <li>(Sₙ, 합성): n개 원소의 순열 전체는 합성에 대해 군을 이룹니다.</li>
+  </ul>
+  <p class="note">주의: 양의 정수는 덧셈에 대한 역원을 모두 포함하지 않으므로 덧셈군이 아닙니다.</p>
+</section>
+
+<section id="subgroup">
+  <h2>3. 부분군(Subgroup)</h2>
+  <p>군 G의 부분집합 H가 같은 연산에 대해 군을 이루면 H를 G의 부분군이라 하고 H≤G로 씁니다.</p>
+  <div class="formula">부분군 판정법: H≠∅이고, a,b∈H이면 a*b⁻¹∈H일 때 H≤G.</div>
+  <p>예를 들어 (ℤ,+)에서 짝수 전체 2ℤ는 부분군입니다. 두 짝수의 차는 다시 짝수이기 때문입니다.</p>
+  <h3>라그랑주 정리</h3>
+  <p>유한군 G와 부분군 H에 대해 |H|는 |G|를 나눕니다.</p>
+  <div class="formula">|G| = [G:H] · |H|</div>
+  <p class="note">따라서 유한군의 부분군 크기는 군의 원소 개수의 약수여야 합니다. 역은 일반적으로 성립하지 않습니다.</p>
+</section>
+
+<section id="cyclic">
+  <h2>4. 순환군(Cyclic Group)</h2>
+  <p>어떤 원소 a 하나로 군의 모든 원소를 생성할 수 있으면 순환군이라고 합니다.</p>
+  <div class="formula">⟨a⟩ = {aⁿ | n∈ℤ}</div>
+  <p>예를 들어 (ℤ,+)는 1이 생성하는 무한 순환군이며, ℤ₆는 1이 생성하는 6차 순환군입니다.</p>
+  <ul>
+    <li>모든 순환군은 가환군입니다.</li>
+    <li>순환군의 모든 부분군은 순환군입니다.</li>
+    <li>유한 순환군의 차수는 생성원 원소의 위수와 같습니다.</li>
+  </ul>
+</section>
+
+<section id="hom">
+  <h2>5. 군 준동형사상과 동형사상</h2>
+  <p>군 G,H 사이의 함수 φ:G→H가 연산을 보존하면 군 준동형사상입니다.</p>
+  <div class="formula">φ(a*b) = φ(a) ⋆ φ(b)</div>
+  <p>준동형사상의 핵(kernel)과 상(image)은 각각 다음과 같습니다.</p>
+  <div class="formula">ker φ = {g∈G | φ(g)=e<sub>H</sub>}<br>im φ = {φ(g) | g∈G}</div>
+  <p>핵은 G의 정규부분군이며, 상은 H의 부분군입니다. 준동형사상이 전단사이면 동형사상이라고 하며 두 군의 대수적 구조가 같다는 뜻입니다.</p>
+  <h3>제1 동형정리</h3>
+  <div class="formula">G / ker φ ≅ im φ</div>
+  <p>핵으로 나눈 몫군은 준동형사상의 상과 동형입니다.</p>
+</section>
+
+<section id="ring">
+  <h2>6. 환(Ring)</h2>
+  <p>환은 덧셈과 곱셈이라는 두 연산을 갖는 구조입니다. 일반적으로 덧셈에 대해 아벨군이고, 곱셈은 결합법칙을 만족하며, 분배법칙이 성립합니다.</p>
+  <div class="formula">a(b+c)=ab+ac, &nbsp; (a+b)c=ac+bc</div>
+  <p>곱셈의 교환법칙이나 곱셈 항등원의 존재는 교재의 정의에 따라 별도로 요구할 수 있습니다.</p>
+  <h3>대표 예</h3>
+  <ul>
+    <li>정수환 ℤ: 덧셈과 곱셈에 대해 환입니다.</li>
+    <li>행렬환 Mₙ(ℝ): 일반적으로 곱셈이 교환적이지 않습니다.</li>
+    <li>다항식환 ℝ[x]: 실수 계수 다항식 전체입니다.</li>
+  </ul>
+  <h3>정역(Integral Domain)</h3>
+  <p>곱셈 항등원을 갖는 가환환에서 0이 아닌 영인자(zero divisor)가 없으면 정역이라고 합니다.</p>
+</section>
+
+<section id="field">
+  <h2>7. 체(Field)</h2>
+  <p>체는 0이 아닌 모든 원소가 곱셈 역원을 갖는 가환환입니다. 즉 0으로 나누는 경우를 제외하고 사칙연산이 가능합니다.</p>
+  <ul>
+    <li>ℚ, ℝ, ℂ는 체입니다.</li>
+    <li>유한체 𝔽ₚ=ℤ/pℤ는 p가 소수일 때 체입니다.</li>
+    <li>ℤ₆는 2와 3 같은 영인자를 가지므로 체가 아닙니다.</li>
+  </ul>
+  <div class="formula">ℤ/nℤ가 체 ⇔ n이 소수</div>
+</section>
+
+<section id="polynomial">
+  <h2>8. 다항식과 기약성</h2>
+  <p>체 F 위의 다항식환 F[x]에서 다항식은 계수가 F에 속하는 형식적 표현입니다.</p>
+  <p>상수가 아닌 다항식 f(x)가 더 낮은 차수의 두 다항식 곱으로 분해되지 않으면 기약(irreducible)이라고 합니다.</p>
+  <h3>예시</h3>
+  <ul>
+    <li>ℚ[x]에서 x²−2는 유리수 범위에서 일차식의 곱으로 분해되지 않으므로 기약입니다.</li>
+    <li>ℝ[x]에서 x²+1은 실수 근이 없으므로 기약입니다.</li>
+    <li>ℂ[x]에서는 x²+1=(x−i)(x+i)이므로 기약이 아닙니다.</li>
+  </ul>
+  <p class="note">기약성은 계수로 사용하는 체에 따라 달라질 수 있습니다.</p>
+</section>
+
+<section id="practice">
+  <h2>9. 확인 문제</h2>
+  <div class="quiz">
+    <p><strong>문제 1.</strong> (ℤ,+)의 항등원은 무엇인가요?</p>
+    <details><summary>정답 보기</summary><p>0입니다. 모든 정수 a에 대해 a+0=0+a=a입니다.</p></details>
+    <hr>
+    <p><strong>문제 2.</strong> ℤ₇가 덧셈에 대해 순환군인 이유는 무엇인가요?</p>
+    <details><summary>정답 보기</summary><p>원소 1의 반복 덧셈으로 0,1,2,3,4,5,6의 모든 원소를 얻을 수 있기 때문입니다.</p></details>
+    <hr>
+    <p><strong>문제 3.</strong> ℤ₈은 체인가요?</p>
+    <details><summary>정답 보기</summary><p>아닙니다. 8은 소수가 아니며, ℤ₈에는 2·4=0과 같은 영인자 관계가 있습니다.</p></details>
+  </div>
+</section>
+
+<section>
+  <h2>10. 학습 순서 제안</h2>
+  <ol>
+    <li>집합, 함수, 동치관계와 이항연산 복습</li>
+    <li>군의 정의와 부분군 판정법 숙달</li>
+    <li>순환군, 순열군, 잉여류와 라그랑주 정리 학습</li>
+    <li>준동형사상, 정규부분군, 몫군과 동형정리 학습</li>
+    <li>환, 정역, 체 및 다항식환 학습</li>
+  </ol>
+  <p class="note">이 자료는 개념 입문용 요약입니다. 엄밀한 학습을 위해서는 각 정의의 공리적 전개와 정리의 증명을 함께 공부하세요.</p>
+</section>
+</main>
+<footer>현대대수학 학습 노트 · 개인 학습 및 강의 보조 자료</footer>
+</body>
+</html>
